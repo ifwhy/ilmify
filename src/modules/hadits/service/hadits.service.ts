@@ -1,7 +1,7 @@
 import type { Response } from "types/response.type.js";
 import HaditsRepository from "../repository/hadits.repository.js";
 import status from "http-status";
-import log from "log/winston.js";
+import log from "../../../log/winston.js";
 
 class HaditsService {
   constructor(

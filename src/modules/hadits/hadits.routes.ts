@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import HaditsService from "./service/hadits.service.js";
 import status from "http-status";
 import { HTTPException } from "hono/http-exception";
-import log from "log/winston.js";
+import log from "../../log/winston.js";
 
 const router = new Hono();
 const haditsService = new HaditsService();

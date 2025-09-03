@@ -4,8 +4,8 @@ import { cors } from "hono/cors";
 import asmaulHusnaRouter from "./modules/asmaul-husna/asmaul-husna.routes.js";
 import status from "http-status";
 import { logger } from "hono/logger";
-import quranRouter from "modules/quran/quran.routes.js";
-import haditsRouter from "modules/hadits/hadits.routes.js";
+import quranRouter from "./modules/quran/quran.routes.js";
+import haditsRouter from "./modules/hadits/hadits.routes.js";
 
 const app = new Hono();
 
