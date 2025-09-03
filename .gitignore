@@ -27,9 +27,10 @@ lerna-debug.log*
 # misc
 .DS_Store
 
-./pnpm-lock.yaml
-./package-json.lock
-./yarn.lock
-./data/doaharian
-./data/niatshalat
-./data/quotes
+pnpm-lock.yaml
+package-json.lock
+yarn.lock
+dist
+src/data/doaharian/
+src/data/niatsholat/
+src/data/quotes/

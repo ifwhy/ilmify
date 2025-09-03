@@ -61,7 +61,7 @@ class QuranService {
     return {
       properties: {
         success: true,
-        message: `Details of Surah ${surah.translation}`,
+        message: `Details of Surah ${surah.revelation_en}`,
         data: surah,
       },
       statusCode: status.OK,

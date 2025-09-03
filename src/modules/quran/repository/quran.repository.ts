@@ -7,11 +7,11 @@ class QuranRepository {
   }
 
   async getAllSurahMakkiyah(): Promise<ISurah[]>{
-    return listSurah.filter(item => item.location === "Makkiyah");
+    return listSurah.filter(item => item.revelation_id === "Makkiyah");
   }
 
   async getAllSurahMadaniyah(): Promise<ISurah[]>{
-    return listSurah.filter(item => item.location === "Madaniyah");
+    return listSurah.filter(item => item.revelation_id === "Madaniyah");
   }
 
   async getSurah(number: number): Promise<ISurah> {
