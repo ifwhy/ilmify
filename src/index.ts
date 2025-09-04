@@ -26,9 +26,8 @@ app.get("/", (c: Context) => {
   return c.json({
     author: "Ivan Wahyu Nugroho",
     instagram: "https://instagram.com/ifwhy",
-    github: "https://github.com/ifwhy",
+    repository: "https://github.com/ifwhy/ilmify",
     message: "If something wrong, please contact me",
-    docs: "https://docs.example.com",
   });
 });
 
