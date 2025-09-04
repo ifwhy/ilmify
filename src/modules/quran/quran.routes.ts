@@ -9,9 +9,9 @@ const quranService = new QuranService();
 
 router.get("/", async (c) => {
   try {
-    const location = c.req.query("location");
+    const type = c.req.query("type");
 
-    const resJson = await quranService.getAllSurah(location as "all" | "makkiyah" | "madaniyah");
+    const resJson = await quranService.getAllSurah(type as "all" | "makkiyyah" | "madaniyyah");
     return c.json(resJson.properties, resJson.statusCode);
   } catch (error) {
     log.error("Failed to retrieve Surah", error);

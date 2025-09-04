@@ -1,4 +1,4 @@
-import asmaulHusna from '@/data/asmaulhusna/asmaulhusna.json' with { type: "json" };
+import asmaulHusna from '../../../data/asmaulhusna/asmaulhusna.json' with { type: "json" };
 import type { IAsmaulHusna } from './asmaul-husna.type.js';
 
 class AsmaulHusnaRepository {

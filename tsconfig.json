@@ -12,11 +12,7 @@
     "jsxImportSource": "hono/jsx",
     "outDir": "./dist",
     "resolveJsonModule": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@/public/*": ["../public/*"]
-    }
+    "baseUrl": "./src"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

@@ -1,16 +1,17 @@
 import type { Response } from "types/response.type.js";
 import QuranRepository from "../repository/quran.repository.js";
 import status from "http-status";
+import type { IDetailSurah } from "../repository/quran.types.js";
 
 class QuranService {
   private readonly repository: QuranRepository = new QuranRepository();
 
   async getAllSurah(
-    location: "all" | "makkiyah" | "madaniyah" = "all"
+    location: "all" | "makkiyyah" | "madaniyyah" = "all"
   ): Promise<Response> {
     let surah;
 
-    if (location === "makkiyah") {
+    if (location === "makkiyyah") {
       surah = await this.repository.getAllSurahMakkiyah();
       return {
         properties: {
@@ -20,7 +21,7 @@ class QuranService {
         },
         statusCode: status.OK,
       };
-    } else if (location === "madaniyah") {
+    } else if (location === "madaniyyah") {
       surah = await this.repository.getAllSurahMadaniyah();
       return {
         properties: {
@@ -56,12 +57,12 @@ class QuranService {
       };
     }
 
-    const surah = await this.repository.getSurah(number);
+    const surah: IDetailSurah = await this.repository.getSurah(number);
 
     return {
       properties: {
         success: true,
-        message: `Details of Surah ${surah.revelation_en}`,
+        message: `Details of Surah ${surah.latin}`,
         data: surah,
       },
       statusCode: status.OK,

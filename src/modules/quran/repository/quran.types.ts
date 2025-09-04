@@ -14,3 +14,23 @@ export interface ISurah {
     tafsir: string;
     audio_url: string;
 }
+
+export interface IDetailSurah {
+    surah_number: number;
+    arabic: string;
+    latin: string;
+    transliteration: string;
+    translation: string;
+    total_ayat: number;
+    location: "makkiyah" | "madaniyyah";
+    ayat: IAyat[];
+}
+
+export interface IAyat {
+    surah_number: number;
+    ayat_number: number;
+    arabic: string;
+    kitabah: string;
+    latin: string;
+    translation: string;
+}
