@@ -1,4 +1,4 @@
-import listSurah from '../../../data/surah/listsurah.json' with { type: "json" }
+import listSurah from '@/data/surah/listsurah.json' with { type: "json" }
 import type { ISurah } from './quran.types.js';
 
 class QuranRepository {
@@ -15,7 +15,7 @@ class QuranRepository {
   }
 
   async getSurah(number: number): Promise<ISurah> {
-    const surah = await import(`../../../data/surah/${number}.json`, {
+    const surah = await import(`@/public/data/surah/${number}.json`, {
       assert: { type: "json" },
     });
     return surah.default;

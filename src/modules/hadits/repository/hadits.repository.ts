@@ -1,4 +1,4 @@
-import listHadits from '../../../data/hadits/list.json' with { type: "json" }
+import listHadits from '@/data/hadits/list.json' with { type: "json" }
 import type { IDetailHadits, IListHadits } from './hadits.type.js';
 
 class HaditsRepository {
@@ -7,7 +7,7 @@ class HaditsRepository {
     }
 
     async getAllHadits(rawi:"abu-dawud" | "ahmad" | "bukhari" | "darimi" | "ibnu-majah" | "malik" | "muslim" | "nasai" | "tirmidzi", page:number = 1, limit:number = 10): Promise<IDetailHadits[]>{
-        const { default: allHadits } = await import(`../../../data/hadits/${rawi}.json`, {
+        const { default: allHadits } = await import(`@/public/data/hadits/${rawi}.json`, {
             assert: { type: "json" },
         });
 
