@@ -1,4 +1,4 @@
-import { PrismaClient, type Hadits } from 'generated/prisma/index.js';
+import { PrismaClient, type Hadits } from '../../../generated/prisma/index.js';
 
 class HaditsRepository {
 

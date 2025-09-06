@@ -1,4 +1,4 @@
-import { PrismaClient, type Ayat, type Surah } from 'generated/prisma/index.js';
+import { PrismaClient, type Ayat, type Surah } from '../../../generated/prisma/index.js';
 
 class QuranRepository {
 
