@@ -3,17 +3,19 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc && mkdir -p dist/data && cp -r src/data/* dist/data",
+    "build": "tsc && cp -r src/generated/ dist/",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.0",
+    "@prisma/client": "6.15.0",
     "hono": "^4.9.5",
     "http-status": "^2.1.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "prisma": "6.15.0",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
   }

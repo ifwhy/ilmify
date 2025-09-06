@@ -1,7 +1,7 @@
 import type { Response } from "types/response.type.js";
 import QuranRepository from "../repository/quran.repository.js";
 import status from "http-status";
-import type { IDetailSurah } from "../repository/quran.types.js";
+import type { Ayat } from "generated/prisma/index.js";
 
 class QuranService {
   private readonly repository: QuranRepository = new QuranRepository();
@@ -57,13 +57,24 @@ class QuranService {
       };
     }
 
-    const surah: IDetailSurah = await this.repository.getSurah(number);
+    const ayat: Ayat[] = await this.repository.getAyat(number);
+    const surah = await this.repository.getSurahName(number);
+
+    if (!surah || ayat.length === 0) {
+      return {
+        properties: {
+          success: false,
+          message: `Surah with number ${ayat[0].surah_number} not found`,
+        },
+        statusCode: status.NOT_FOUND,
+      };
+    }
 
     return {
       properties: {
         success: true,
-        message: `Details of Surah ${surah.latin}`,
-        data: surah,
+        message: `Details of Surah Number ${surah.name_id}`,
+        data: ayat,
       },
       statusCode: status.OK,
     };

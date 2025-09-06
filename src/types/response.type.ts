@@ -9,4 +9,6 @@ export type ResponseProperties = {
   success: boolean;
   message: string;
   data?: any;
+  page?: number;
+  limit?: number;
 };

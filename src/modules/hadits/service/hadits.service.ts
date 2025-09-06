@@ -63,6 +63,8 @@ class HaditsService {
       properties: {
         success: true,
         message: `Get hadits for ${rawi}`,
+        limit,
+        page,
         data: hadits,
       },
       statusCode: status.OK,

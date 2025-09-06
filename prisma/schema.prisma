@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../src/data/ilmify.sqlite"
+}
+
+model Surah {
+  id Int @id
+  sequence Int
+  number_of_verses Int
+  name_short String
+  name_long String
+  name_en String
+  name_id String
+  translation_en String
+  translation_id String
+  revelation String
+  revelation_en String
+  revelation_id String
+  tafsir String
+  audio_url String
+
+  ayat Ayat[]
+  @@map("surah")
+}
+
+model Ayat {
+  id Int @id
+  surah_number Int
+  ayat_number Int
+  arabic String
+  kitabah String
+  latin String
+  translation String
+
+  surah Surah @relation(fields: [surah_number], references: [id], onDelete: Cascade)
+
+  @@map("ayat")
+}
+
+model Hadits {
+  slug String @id
+  name String
+  total Int
+
+  details DetailHadits[]
+  @@map("hadits")
+}
+
+model DetailHadits {
+  id Int @id
+  number Int
+  arab String
+  terjemah String
+  slug String
+
+  rawi Hadits @relation(fields: [slug], references: [slug], onDelete: Cascade)
+
+  @@map("detail_hadits")
+}
+
+model AsmaulHusna {
+  id Int @id
+  latin String
+  arabic String
+  id_translation String
+  en_translation String
+
+  @@map("asmaul_husna")
+}
+
+// model Doa {
+//   id Int @id
+//   text String
+//   reference String
+// }
+
+model NiatSholat {
+  number Int @id
+  name String
+  arabic String
+  latin String
+  translation String
+
+  @@map("niat_sholat")
+}

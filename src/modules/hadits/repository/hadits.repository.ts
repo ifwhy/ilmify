@@ -1,25 +1,30 @@
-import listHadits from '../../../data/hadits/list.json' with { type: "json" }
-import type { IDetailHadits, IListHadits } from './hadits.type.js';
-const { readFile } = await import('fs/promises');
-const path = await import('path');
-const { fileURLToPath } = await import('url');
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { PrismaClient, type Hadits } from '../../../generated/prisma/index.js';
 
 class HaditsRepository {
-    async getAllListHadits(): Promise<IListHadits[]> {
-        return listHadits as IListHadits[];
+
+    constructor(private readonly hadits = new PrismaClient().hadits) {}
+
+    async getAllListHadits(): Promise<Hadits[]> {
+        return this.hadits.findMany();
     }
 
-    async getAllHadits(rawi: "abu-dawud" | "ahmad" | "bukhari" | "darimi" | "ibnu-majah" | "malik" | "muslim" | "nasai" | "tirmidzi", page: number = 1, limit: number = 10): Promise<IDetailHadits[]> {
-        const filePath = path.resolve(__dirname, `../../../data/hadits/${rawi}.json`);
-        const fileContent = await readFile(filePath, 'utf-8');
-        const allHadits: IDetailHadits[] = JSON.parse(fileContent);
-
-        const indexStart = (page - 1) * limit;
-        const indexEnd = indexStart + limit;
-
-        return allHadits.slice(indexStart, indexEnd);
+    async getAllHadits(rawi: "abu-dawud" | "ahmad" | "bukhari" | "darimi" | "ibnu-majah" | "malik" | "muslim" | "nasai" | "tirmidzi", page: number = 1, limit: number = 10): Promise<Hadits[]> {
+        const skip = (page - 1) * limit;
+        return this.hadits.findMany({
+            where: { slug: rawi },
+            include: {
+                details: {
+                    skip,
+                    take: limit,
+                    select: {
+                        id: true,
+                        number: true,
+                        arab: true,
+                        terjemah: true,
+                    }
+                }
+            },
+        });
     }
 }
 

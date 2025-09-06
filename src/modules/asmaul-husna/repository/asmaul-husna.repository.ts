@@ -1,16 +1,17 @@
-import asmaulHusna from '../../../data/asmaulhusna/asmaulhusna.json' with { type: "json" };
-import type { IAsmaulHusna } from './asmaul-husna.type.js';
+import { PrismaClient } from "../../../generated/prisma/index.js";
 
 class AsmaulHusnaRepository {
-    private readonly data: IAsmaulHusna[] = asmaulHusna;
+  constructor(private asmaulHusna = new PrismaClient().asmaulHusna) {}
 
-    getAll(){
-        return this.data
-    }
+  async getAll() {
+    return await this.asmaulHusna.findMany();;
+  }
 
-    getOne(number: number){
-        return this.data.find((item) => item.number === number)
-    }
+  async getOne(number: number) {
+    return await this.asmaulHusna.findUnique({
+      where: { id: number },
+    });
+  }
 }
 
 export default AsmaulHusnaRepository;

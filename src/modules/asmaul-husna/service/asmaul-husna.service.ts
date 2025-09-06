@@ -12,7 +12,7 @@ class AsmaulHusnaService {
       properties: {
         success: true,
         message: "Get All Asmaul Husna",
-        data: this.repository.getAll(),
+        data: await this.repository.getAll(),
       },
       statusCode: status.OK,
     };
