@@ -36,4 +36,3 @@ src/data/niatsholat/
 src/data/quotes/
 ./src/data/hadits/
 ./src/data/surah/
-/src/generated/prisma
