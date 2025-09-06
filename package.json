@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "npx prisma generate && tsc && cp -r src/generated/ dist/",
+    "build": "npx prisma generate && tsc && cp -r src/generated/ dist/ && cp -r src/data/ dist/",
     "start": "node dist/index.js"
   },
   "dependencies": {
