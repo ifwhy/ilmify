@@ -29,11 +29,15 @@ class QuranRepository {
   async getAyat(number: number): Promise<IDetailSurah>{
     const ayat = await this.surah.findMany({
       include: {
-        ayat: true,
+        ayat: {
+          orderBy: {
+            ayat_number: 'asc'
+          }
+        },
       },
       where: {
         id: number
-      },
+      }
     });
     return ayat as unknown as IDetailSurah;
   }
