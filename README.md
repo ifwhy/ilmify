@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="./assets/ilmify.png" alt="Ilmify Logo" width="250" />
   <h1>Ilmify</h1>
   <p><b>Modern Islamic API - Quran, Hadith, Asmaul Husna</b></p>
   <br/>
@@ -52,8 +53,8 @@ Documentation is coming soon! Stay tuned for OpenAPI specs and usage examples.
 ## 👤 Author
 - Ivan Wahyu Nugroho ([Instagram](https://instagram.com/ifwhy) | [GitHub](https://github.com/ifwhy))
 
-## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to fork the repo and submit pull requests.
+## 🤝 Contributing & Feature Requests
+Contributions, issues, and feature requests are welcome! If you want to request a new feature (for example, Sholawat Berzanji, etc.), feel free to open an issue or submit a pull request.
 
 ## 📄 License
 MIT License
