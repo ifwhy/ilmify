@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 import type { Ayat, Surah } from "generated/prisma/index.js";
 
 class QuranRepository {
