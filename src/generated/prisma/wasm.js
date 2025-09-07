@@ -86,6 +86,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -138,6 +141,12 @@ exports.Prisma.AsmaulHusnaScalarFieldEnum = {
   en_translation: 'en_translation'
 };
 
+exports.Prisma.QuotesScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  reference: 'reference'
+};
+
 exports.Prisma.NiatSholatScalarFieldEnum = {
   number: 'number',
   name: 'name',
@@ -151,6 +160,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 
 exports.Prisma.ModelName = {
   Surah: 'Surah',
@@ -158,6 +172,7 @@ exports.Prisma.ModelName = {
   Hadits: 'Hadits',
   DetailHadits: 'DetailHadits',
   AsmaulHusna: 'AsmaulHusna',
+  Quotes: 'Quotes',
   NiatSholat: 'NiatSholat'
 };
 /**
@@ -191,7 +206,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../../.env",
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -200,23 +215,23 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
+  "activeProvider": "postgresql",
   "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": null,
-        "value": "file:../src/data/ilmify.sqlite"
+        "fromEnvVar": "DATABASE_URL",
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:../src/data/ilmify.sqlite\"\n}\n\nmodel Surah {\n  id               Int    @id\n  sequence         Int\n  number_of_verses Int\n  name_short       String\n  name_long        String\n  name_en          String\n  name_id          String\n  translation_en   String\n  translation_id   String\n  revelation       String\n  revelation_en    String\n  revelation_id    String\n  tafsir           String\n  audio_url        String\n\n  ayat Ayat[]\n\n  @@map(\"surah\")\n}\n\nmodel Ayat {\n  id           Int    @id\n  surah_number Int\n  ayat_number  Int\n  arabic       String\n  kitabah      String\n  latin        String\n  translation  String\n\n  surah Surah @relation(fields: [surah_number], references: [id], onDelete: Cascade)\n\n  @@map(\"ayat\")\n}\n\nmodel Hadits {\n  slug  String @id\n  name  String\n  total Int\n\n  details DetailHadits[]\n\n  @@map(\"hadits\")\n}\n\nmodel DetailHadits {\n  id       Int    @id\n  number   Int\n  arab     String\n  terjemah String\n  slug     String\n\n  rawi Hadits @relation(fields: [slug], references: [slug], onDelete: Cascade)\n\n  @@map(\"detail_hadits\")\n}\n\nmodel AsmaulHusna {\n  id             Int    @id\n  latin          String\n  arabic         String\n  id_translation String\n  en_translation String\n\n  @@map(\"asmaul_husna\")\n}\n\n// model Doa {\n//   id Int @id\n//   text String\n//   reference String\n// }\n\nmodel NiatSholat {\n  number      Int    @id\n  name        String\n  arabic      String\n  latin       String\n  translation String\n\n  @@map(\"niat_sholat\")\n}\n",
-  "inlineSchemaHash": "08ae0cf368b013aa39b40c1e669b9914cea962e0f9fbb9d3f95164d4c9e1a341",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"driverAdapters\"]\n  output          = \"../src/generated/prisma\"\n}\n\n// prisma/schema.prisma\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Surah {\n  id               Int    @id\n  sequence         Int\n  number_of_verses Int\n  name_short       String\n  name_long        String\n  name_en          String\n  name_id          String\n  translation_en   String\n  translation_id   String\n  revelation       String\n  revelation_en    String\n  revelation_id    String\n  tafsir           String\n  audio_url        String\n\n  ayat Ayat[]\n\n  @@map(\"surah\")\n}\n\nmodel Ayat {\n  id           Int    @id\n  surah_number Int\n  ayat_number  Int\n  arabic       String\n  kitabah      String\n  latin        String\n  translation  String\n\n  surah Surah @relation(fields: [surah_number], references: [id], onDelete: Cascade)\n\n  @@map(\"ayat\")\n}\n\nmodel Hadits {\n  slug  String @id\n  name  String\n  total Int\n\n  details DetailHadits[]\n\n  @@map(\"hadits\")\n}\n\nmodel DetailHadits {\n  id       Int    @id\n  number   Int\n  arab     String\n  terjemah String\n  slug     String\n\n  rawi Hadits @relation(fields: [slug], references: [slug], onDelete: Cascade)\n\n  @@map(\"detail_hadits\")\n}\n\nmodel AsmaulHusna {\n  id             Int    @id\n  latin          String\n  arabic         String\n  id_translation String\n  en_translation String\n\n  @@map(\"asmaul_husna\")\n}\n\nmodel Quotes {\n  id        Int    @id\n  text      String\n  reference String\n\n  @@map(\"quotes\")\n}\n\n// model Doa {\n//   id Int @id\n//   text String\n//   reference String\n// }\n\nmodel NiatSholat {\n  number      Int    @id\n  name        String\n  arabic      String\n  latin       String\n  translation String\n\n  @@map(\"niat_sholat\")\n}\n",
+  "inlineSchemaHash": "0af9a1562cc636b226a3977f277f15bc2a03c3945f1f613f560af3fa7e49e8b9",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Surah\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sequence\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"number_of_verses\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name_short\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_long\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tafsir\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audio_url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ayat\",\"kind\":\"object\",\"type\":\"Ayat\",\"relationName\":\"AyatToSurah\"}],\"dbName\":\"surah\"},\"Ayat\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"surah_number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"ayat_number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"kitabah\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"surah\",\"kind\":\"object\",\"type\":\"Surah\",\"relationName\":\"AyatToSurah\"}],\"dbName\":\"ayat\"},\"Hadits\":{\"fields\":[{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"total\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"details\",\"kind\":\"object\",\"type\":\"DetailHadits\",\"relationName\":\"DetailHaditsToHadits\"}],\"dbName\":\"hadits\"},\"DetailHadits\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"arab\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"terjemah\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rawi\",\"kind\":\"object\",\"type\":\"Hadits\",\"relationName\":\"DetailHaditsToHadits\"}],\"dbName\":\"detail_hadits\"},\"AsmaulHusna\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_translation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"en_translation\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"asmaul_husna\"},\"NiatSholat\":{\"fields\":[{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"niat_sholat\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Surah\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"sequence\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"number_of_verses\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name_short\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_long\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation_en\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"revelation_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tafsir\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"audio_url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ayat\",\"kind\":\"object\",\"type\":\"Ayat\",\"relationName\":\"AyatToSurah\"}],\"dbName\":\"surah\"},\"Ayat\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"surah_number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"ayat_number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"kitabah\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"surah\",\"kind\":\"object\",\"type\":\"Surah\",\"relationName\":\"AyatToSurah\"}],\"dbName\":\"ayat\"},\"Hadits\":{\"fields\":[{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"total\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"details\",\"kind\":\"object\",\"type\":\"DetailHadits\",\"relationName\":\"DetailHaditsToHadits\"}],\"dbName\":\"hadits\"},\"DetailHadits\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"arab\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"terjemah\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rawi\",\"kind\":\"object\",\"type\":\"Hadits\",\"relationName\":\"DetailHaditsToHadits\"}],\"dbName\":\"detail_hadits\"},\"AsmaulHusna\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id_translation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"en_translation\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"asmaul_husna\"},\"Quotes\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reference\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"quotes\"},\"NiatSholat\":{\"fields\":[{\"name\":\"number\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"arabic\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"latin\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"translation\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":\"niat_sholat\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
@@ -229,7 +244,9 @@ config.engineWasm = {
 config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
-  parsed: {}
+  parsed: {
+    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+  }
 })
 
 if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {

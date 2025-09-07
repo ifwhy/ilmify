@@ -114,6 +114,9 @@ Prisma.NullTypes = {
  */
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -166,6 +169,12 @@ exports.Prisma.AsmaulHusnaScalarFieldEnum = {
   en_translation: 'en_translation'
 };
 
+exports.Prisma.QuotesScalarFieldEnum = {
+  id: 'id',
+  text: 'text',
+  reference: 'reference'
+};
+
 exports.Prisma.NiatSholatScalarFieldEnum = {
   number: 'number',
   name: 'name',
@@ -179,6 +188,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 
 exports.Prisma.ModelName = {
   Surah: 'Surah',
@@ -186,6 +200,7 @@ exports.Prisma.ModelName = {
   Hadits: 'Hadits',
   DetailHadits: 'DetailHadits',
   AsmaulHusna: 'AsmaulHusna',
+  Quotes: 'Quotes',
   NiatSholat: 'NiatSholat'
 };
 

@@ -10,9 +10,10 @@ generator client {
   output          = "../src/generated/prisma"
 }
 
+// prisma/schema.prisma
 datasource db {
-  provider = "sqlite"
-  url      = "file:../src/data/ilmify.sqlite"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Surah {
@@ -80,6 +81,14 @@ model AsmaulHusna {
   en_translation String
 
   @@map("asmaul_husna")
+}
+
+model Quotes {
+  id        Int    @id
+  text      String
+  reference String
+
+  @@map("quotes")
 }
 
 // model Doa {

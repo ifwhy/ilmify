@@ -30,6 +30,7 @@ lerna-debug.log*
 pnpm-lock.yaml
 package-json.lock
 yarn.lock
+dist/
 src/data/doaharian/
 src/data/niatsholat/
 src/data/quotes/
