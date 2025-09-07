@@ -27,6 +27,7 @@ lerna-debug.log*
 # misc
 .DS_Store
 
+src/data/
 pnpm-lock.yaml
 package-json.lock
 yarn.lock
