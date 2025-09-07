@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import type { Ayat, Surah } from "generated/prisma/index.js";
+import type { IDetailSurah } from "./quran.types.js";
 
 class QuranRepository {
 
@@ -25,8 +26,8 @@ class QuranRepository {
     })
   }
 
-  async getAyat(number: number): Promise<Ayat[]>{
-    const surah = await this.surah.findUnique({
+  async getAyat(number: number): Promise<IDetailSurah>{
+    const ayat = await this.surah.findMany({
       include: {
         ayat: true,
       },
@@ -34,7 +35,7 @@ class QuranRepository {
         id: number
       },
     });
-    return surah?.ayat ?? [];
+    return ayat as unknown as IDetailSurah;
   }
 
   async getSurahName(number: number): Promise<{ name_id: string; name_en: string } | null> {

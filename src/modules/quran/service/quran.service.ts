@@ -57,14 +57,14 @@ class QuranService {
       };
     }
 
-    const ayat: Ayat[] = await this.repository.getAyat(number);
+    const ayat= await this.repository.getAyat(number);
     const surah = await this.repository.getSurahName(number);
 
-    if (!surah || ayat.length === 0) {
+    if (!surah) {
       return {
         properties: {
           success: false,
-          message: `Surah with number ${ayat[0].surah_number} not found`,
+          message: `Surah with number ${number} not found`,
         },
         statusCode: status.NOT_FOUND,
       };
