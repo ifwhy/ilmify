@@ -73,7 +73,7 @@ class QuranService {
     return {
       properties: {
         success: true,
-        message: `Details of Surah Number ${surah.name_id}`,
+        message: `Details of Surah ${surah.name_id}`,
         data: ayat,
       },
       statusCode: status.OK,
